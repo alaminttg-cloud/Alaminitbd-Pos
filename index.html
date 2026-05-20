@@ -272,49 +272,126 @@ main{
 
 </main>
 
+<!-- Replace your old checkout button code with this -->
+
+<button class="checkout-btn" onclick="checkout()">
+    Payment Checkout
+</button>
+
+<!-- Payment Modal -->
+
+<div id="paymentModal" class="payment-modal">
+
+    <div class="payment-box">
+
+        <h2>Select Payment Method</h2>
+
+        <button class="bkash-btn" onclick="payNow('bKash')">
+            Pay with bKash
+        </button>
+
+        <button class="nagad-btn" onclick="payNow('Nagad')">
+            Pay with Nagad
+        </button>
+
+        <button class="close-btn" onclick="closePayment()">
+            Close
+        </button>
+
+    </div>
+
+</div>
+
+<style>
+
+.payment-modal{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.5);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.payment-box{
+    background:white;
+    padding:30px;
+    width:90%;
+    max-width:350px;
+    border-radius:15px;
+    text-align:center;
+}
+
+.payment-box h2{
+    margin-bottom:20px;
+}
+
+.bkash-btn,
+.nagad-btn,
+.close-btn{
+
+    width:100%;
+    padding:15px;
+    margin-top:10px;
+    border:none;
+    border-radius:10px;
+    font-size:18px;
+    cursor:pointer;
+    color:white;
+
+}
+
+.bkash-btn{
+    background:#e2136e;
+}
+
+.nagad-btn{
+    background:#f97316;
+}
+
+.close-btn{
+    background:#111827;
+}
+
+</style>
+
 <script>
-
-let cart = [];
-let total = 0;
-
-function addToCart(name, price){
-
-    cart.push({name, price});
-
-    total += price;
-
-    updateCart();
-
-}
-
-function updateCart(){
-
-    let cartItems = document.getElementById("cartItems");
-
-    cartItems.innerHTML = "";
-
-    cart.forEach(item => {
-
-        cartItems.innerHTML += `
-            <div class="cart-item">
-                <span>${item.name}</span>
-                <span>৳ ${item.price}</span>
-            </div>
-        `;
-
-    });
-
-    document.getElementById("total").innerText = total;
-
-}
 
 function checkout(){
 
-    alert("Payment Successful!");
+    if(cart.length === 0){
+
+        alert("Cart is Empty!");
+        return;
+
+    }
+
+    document.getElementById("paymentModal").style.display = "flex";
+
+}
+
+function closePayment(){
+
+    document.getElementById("paymentModal").style.display = "none";
+
+}
+
+function payNow(method){
+
+    alert("Payment Successful via " + method);
+
+    cart = [];
+    total = 0;
+
+    updateCart();
+
+    closePayment();
 
 }
 
 </script>
-
-</body>
 </html>
